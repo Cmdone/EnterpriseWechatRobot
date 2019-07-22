@@ -26,6 +26,18 @@ schedule.scheduleJob("0 0 11 * * 4", () => { // 每周四11点外卖提醒
     });
 });
 
+schedule.scheduleJob("0 0 10 * * 1", () => { // 每周一10点周报提醒
+    console.log(`start 每周一10点周报提醒: ${moment().format("YYYY-MM-DD HH:mm:ss")}`);
+
+    let content = fs.readFileSync("./messages/text_week_report.txt").toString();
+    let option = optionProvider.newRobotTextOption(content);
+    request.post(option, (err, res, body) => {
+        logResponse(err, res, body);
+
+        console.log(`end 每周一10点周报提醒`);
+    });
+});
+
 schedule.scheduleJob("0 20 9 * * 1-5", () => { // 工作日提醒上班打卡
     console.log(`start 工作日提醒上班打卡: ${moment().format("YYYY-MM-DD HH:mm:ss")}`);
 
