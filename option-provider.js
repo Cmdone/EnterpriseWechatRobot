@@ -10,6 +10,9 @@ const weatherUrl = "https://www.tianqiapi.com/api/?" + querystring.stringify({
     cityid: 101280604 // 定位于南山区
 });
 
+// 随机图片GET地址
+const randomImgUrl = "https://api.pixivic.com/illust";
+
 /**
  * 创建一个机器人PUSH文本类型参数
  * @param  {[type]} content                    文本内容
@@ -98,4 +101,12 @@ function newRobotGeneralOption() {
  */
 exports.newWeatherOption = () => ({
     url: weatherUrl
+});
+
+
+exports.newRandomImageOption = () => ({
+    url: randomImgUrl,
+    headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36"
+    }
 });

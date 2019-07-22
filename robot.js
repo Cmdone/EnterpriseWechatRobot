@@ -8,7 +8,6 @@ const util = require("util"); // 工具类
 const querystring = require("querystring"); // URL参数解析模块
 const crypto = require("crypto"); // 编解码工具
 
-const md5Generator = crypto.createHash("md5"); // MD5工具
 
 // TODO: 将各任务抽成继承关系的模块
 // TODO: 统一的请求错误日志收集模块
@@ -62,6 +61,7 @@ schedule.scheduleJob("0 30 21 * * 1-5", () => { // 工作日提醒加班打卡
     });
 });
 
+const md5Generator = crypto.createHash("md5"); // MD5工具
 schedule.scheduleJob("0 0 8 * * 1-5", () => { // 工作日上班天气提醒
     console.log(`start 工作日上班天气提醒: ${moment().format("YYYY-MM-DD HH:mm:ss")}`);
 
@@ -83,15 +83,21 @@ schedule.scheduleJob("0 0 8 * * 1-5", () => { // 工作日上班天气提醒
             console.log(`end text 工作日上班天气提醒`);
         });
 
-        // 发送图片信息
-        let img = fs.readFileSync("./gif/" + weather.wea_img + ".gif");
-        let base64 = img.toString("base64");
-        let md5 = md5Generator.update(img).digest("hex");
-        let imgOption = optionProvider.newRobotImageOption(base64, md5);
-        request.post(imgOption, (err, res, body) => {
-            logResponse(err, res, body);
+        // 获取并发送随机图片
+        let fileName = `./imgs/${moment().format("YYYY-MM-DD")}.jpg`;
+        let stream = fs.createWriteStream(fileName);
+        let imgOption = optionProvider.newRandomImageOption();
+        request.get(imgOption).pipe(stream);
+        stream.on("finish", (data) => {
+            let img = fs.readFileSync(fileName);
+            let base64 = img.toString("base64");
+            let md5 = md5Generator.update(img).digest("hex");
+            let imgOption = optionProvider.newRobotImageOption(base64, md5);
+            request.post(imgOption, (err, res, body) => {
+                logResponse(err, res, body);
 
-            console.log(`end image 工作日上班天气提醒`);
+                console.log(`end image 工作日上班天气提醒`);
+            });
         });
     });
 });

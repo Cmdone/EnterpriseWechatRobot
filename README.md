@@ -10,9 +10,10 @@
 
 [win10 计划任务中加入bat文件执行](https://blog.csdn.net/langqingj/article/details/80974632)  
 
-# 天气接口
+# 接口
 
 [免费天气api接口](https://www.kancloud.cn/ccjin/yingq)  
+[随机图片](https://www.52ecy.cn/post-67.html)  
 
 # 其他工具
 
