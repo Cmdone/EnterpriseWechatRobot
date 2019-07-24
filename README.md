@@ -8,6 +8,9 @@
 
 # Windows计划任务
 
+1. 在开机时自动运行[机器人任务脚本](./start.bat)于后台中  
+2. 在系统睡眠时执行[唤醒脚本](./weak.bat)，避免因系统睡眠时断网造成机器人任务失败  
+
 [win10 计划任务中加入bat文件执行](https://blog.csdn.net/langqingj/article/details/80974632)  
 
 # 接口

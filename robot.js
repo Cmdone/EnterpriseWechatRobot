@@ -12,6 +12,9 @@ const crypto = require("crypto"); // 编解码工具
 // TODO: 将各任务抽成继承关系的模块
 // TODO: 统一的请求错误日志收集模块
 // TODO: 尝试改为markdown，使文本有突出性
+// TODO: 修改log逻辑，一旦网络出错则crash
+// TODO: 获取图片时403处理
+// TODO: Promise封装异步任务
 
 schedule.scheduleJob("0 0 11 * * 4", () => { // 每周四11点外卖提醒
     console.log(`start 每周四11点外卖提醒: ${moment().format("YYYY-MM-DD HH:mm:ss")}`);
@@ -62,13 +65,15 @@ schedule.scheduleJob("0 30 21 * * 1-5", () => { // 工作日提醒加班打卡
 });
 
 const md5Generator = crypto.createHash("md5"); // MD5工具
-schedule.scheduleJob("0 0 8 * * 1-5", () => { // 工作日上班天气提醒
+schedule.scheduleJob("0 43 9 * * 1-5", () => { // 工作日上班天气提醒
     console.log(`start 工作日上班天气提醒: ${moment().format("YYYY-MM-DD HH:mm:ss")}`);
 
     let option = optionProvider.newWeatherOption();
     request.get(option, (err, res, body) => {
         console.log(`get weather 工作日上班天气提醒`);
-        logResponse(err, res, body);
+        if (!logResponse(err, res, body)) {
+            return;
+        }
 
         // 将天气结果转码 & 转为JSON
         let weather = JSON.parse(querystring.unescape(body));
@@ -103,14 +108,17 @@ schedule.scheduleJob("0 0 8 * * 1-5", () => { // 工作日上班天气提醒
 });
 
 function logResponse(err, res, body) {
-    let success = true;
+    let success = false;
     let info = moment().format("YYYY-MM-DD HH:mm:ss");
-    if (res.statusCode == 200) {
-        info = `${info}:\n[BODY] ${body}\n\n`;
+    if (err) {
+        info += `[ERROR] ${err}`;
+    } else if (!res || res.statusCode != 200) {
+        info += `[WRONG RES] ${res}`;
     } else {
-        success = false;
-        info = `${info}:\n[ERROR] ${err}\n[STATUS] ${res.statusCode}\n[BODY] ${body}\n\n`;
+        success = true;
+        info += `[BODY] ${body}`;
     }
+    info += "\n\n";
     fs.writeFileSync('./log.txt', info, {
         flag: "a"
     });
