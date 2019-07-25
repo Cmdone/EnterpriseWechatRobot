@@ -19,7 +19,7 @@ const crypto = require("crypto"); // 编解码工具
 schedule.scheduleJob("0 40 10 * * 4", () => { // 每周四11点外卖提醒
     console.log(`start 每周四11点外卖提醒: ${moment().format("YYYY-MM-DD HH:mm:ss")}`);
 
-    let content = fs.readFileSync("./messages/text_KFC.txt").toString();
+    let content = fs.readFileSync("./messages/text_takeout.txt").toString();
     let option = optionProvider.newRobotTextOption(content, ["15602386385"]);
     request.post(option, (err, res, body) => {
         logResponse(err, res, body);
