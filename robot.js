@@ -16,7 +16,7 @@ const crypto = require("crypto"); // 编解码工具
 // TODO: 获取图片时403处理
 // TODO: Promise封装异步任务
 
-schedule.scheduleJob("0 0 11 * * 4", () => { // 每周四11点外卖提醒
+schedule.scheduleJob("0 40 10 * * 4", () => { // 每周四11点外卖提醒
     console.log(`start 每周四11点外卖提醒: ${moment().format("YYYY-MM-DD HH:mm:ss")}`);
 
     let content = fs.readFileSync("./messages/text_KFC.txt").toString();
@@ -52,7 +52,7 @@ schedule.scheduleJob("0 20 9 * * 1-5", () => { // 工作日提醒上班打卡
     });
 });
 
-schedule.scheduleJob("0 30 21 * * 1-5", () => { // 工作日提醒加班打卡
+schedule.scheduleJob("0 30 21 * * *", () => { // 工作日提醒加班打卡
     console.log(`start 工作日提醒加班打卡: ${moment().format("YYYY-MM-DD HH:mm:ss")}`);
 
     let content = fs.readFileSync("./messages/text_day_off.txt").toString();
