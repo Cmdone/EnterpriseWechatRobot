@@ -65,7 +65,7 @@ schedule.scheduleJob("0 30 21 * * 1-5", () => { // 工作日提醒加班打卡
 });
 
 const md5Generator = crypto.createHash("md5"); // MD5工具
-schedule.scheduleJob("0 43 9 * * 1-5", () => { // 工作日上班天气提醒
+schedule.scheduleJob("0 0 8 * * 1-5", () => { // 工作日上班天气提醒
     console.log(`start 工作日上班天气提醒: ${moment().format("YYYY-MM-DD HH:mm:ss")}`);
 
     let option = optionProvider.newWeatherOption();
@@ -119,9 +119,11 @@ function logResponse(err, res, body) {
         info += `[BODY] ${body}`;
     }
     info += "\n\n";
-    fs.writeFileSync('./log.txt', info, {
-        flag: "a"
-    });
+
+    let fd = fs.openSync('./log.txt', 'a');
+    let buf = Buffer.from(info);
+    fs.writeSync(fd, buf, 0, buf.length, 0);
+    fs.closeSync(fd);
 
     return success;
 }
