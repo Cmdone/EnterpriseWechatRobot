@@ -107,6 +107,7 @@ exports.newWeatherOption = () => ({
 exports.newRandomImageOption = () => ({
     url: randomImgUrl,
     headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36"
-    }
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36",
+    },
+    removeRefererHeader: true // 由于API内存在重定向至新浪图床，需要移除referer
 });

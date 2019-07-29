@@ -13,7 +13,7 @@ const crypto = require("crypto"); // 编解码工具
 // TODO: 统一的请求错误日志收集模块
 // TODO: 尝试改为markdown，使文本有突出性
 // TODO: 修改log逻辑，一旦网络出错则crash
-// TODO: 获取图片时403处理
+// TODO: 出错逻辑(if success)
 // TODO: Promise封装异步任务
 
 schedule.scheduleJob("0 40 10 * * 4", () => { // 每周四11点外卖提醒
@@ -120,10 +120,9 @@ function logResponse(err, res, body) {
     }
     info += "\n\n";
 
-    let fd = fs.openSync('./log.txt', 'a');
-    let buf = Buffer.from(info);
-    fs.writeSync(fd, buf, 0, buf.length, 0);
-    fs.closeSync(fd);
+    let fd = fs.writeFileSync('./log.txt', info, {
+        flag: "a"
+    });
 
     return success;
 }
