@@ -2,10 +2,6 @@
 
 [nodejs官网](https://nodejs.org/en/)  
 
-# 模块依赖
-
-// TODO
-
 # Windows计划任务
 
 1. 在开机时自动运行[机器人任务脚本](./start.bat)于后台中  
