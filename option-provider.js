@@ -11,7 +11,10 @@ const weatherUrl = "https://www.tianqiapi.com/api/?" + querystring.stringify({
 });
 
 // 随机图片GET地址
-const randomImgUrl = "https://api.pixivic.com/illust";
+const randomImgUrl = "https://api.pixivic.com/illust?" + querystring.stringify({
+    isOriginal: true,
+    isR18: true
+});
 
 /**
  * 创建一个机器人PUSH文本类型参数
