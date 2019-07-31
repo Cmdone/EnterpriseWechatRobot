@@ -109,7 +109,6 @@ schedule.scheduleJob("0 0 8 * * 1-5", () => { // 工作日上班天气提醒
                 let base64 = img.toString("base64");
                 let md5 = md5Generator.update(img).digest("hex");
                 let imgOption = optionProvider.newRobotImageOption(base64, md5);
-                console.log(imgOption);
                 request.post(imgOption, (err, res, body) => {
                     logResponse(err, res, body);
 
