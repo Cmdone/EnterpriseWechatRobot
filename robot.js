@@ -67,8 +67,8 @@ schedule.scheduleJob("0 30 21 * * *", () => { // 工作日提醒加班打卡
     });
 });
 
-const md5Generator = crypto.createHash("md5"); // MD5工具
-schedule.scheduleJob("0 0 8 * * 1-5", () => { // 工作日上班天气提醒
+// TODO 改为每日晨间新闻 + 色图
+schedule.scheduleJob("0 0 8 * * 1-7", () => { // 工作日上班天气提醒
     console.log(`start 工作日上班天气提醒: ${moment().format("YYYY-MM-DD HH:mm:ss")}`);
 
     let option = optionProvider.newWeatherOption();
@@ -107,6 +107,7 @@ schedule.scheduleJob("0 0 8 * * 1-5", () => { // 工作日上班天气提醒
             }).then((res) => {
                 let img = fs.readFileSync(optPath);
                 let base64 = img.toString("base64");
+                let md5Generator = crypto.createHash("md5"); // MD5工具
                 let md5 = md5Generator.update(img).digest("hex");
                 let imgOption = optionProvider.newRobotImageOption(base64, md5);
                 request.post(imgOption, (err, res, body) => {
