@@ -16,6 +16,9 @@ const randomImgUrl = "https://api.pixivic.com/illust?" + querystring.stringify({
     isR18: true
 });
 
+// 新闻POST地址
+const newsUrl = "https://api.apiopen.top/getWangYiNews";
+
 /**
  * 创建一个机器人PUSH文本类型参数
  * @param  {[type]} content                    文本内容
@@ -46,12 +49,16 @@ exports.newRobotTextOption = (content, mentionedMobileList = null, mentionedList
  * // TODO: res.body
  * 创建一个机器人PUSH markdown类型参数
  */
-exports.newRobotMarkdownOption = () => {
-    let res = newRobotGeneralOption();
-    res.body = {
+exports.newRobotMarkdownOption = (content) => {
+    let body = {
         msgtype: "markdown",
-        markdown: null
+        markdown: {
+            content
+        }
     };
+
+    let res = newRobotGeneralOption();
+    res.body = JSON.stringify(body);
 
     return res;
 };
@@ -109,8 +116,18 @@ exports.newWeatherOption = () => ({
 
 exports.newRandomImageOption = () => ({
     url: randomImgUrl,
+    encoding: null,
     headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36",
     },
     removeRefererHeader: true // 由于API内存在重定向至新浪图床，需要移除referer
+});
+
+
+exports.newNewsOption = () => ({
+    url: newsUrl,
+    form: {
+        page: 1,
+        count: 10
+    }
 });
