@@ -30,7 +30,7 @@ const IMAGE_MIN_FAIL_MESSAGE = "**图片压缩失败，请查看日志**\n";
 const INFO_POST_MARKDOWN = "发送Markdown消息";
 const INFO_POST_IMAGE = "发送图片消息";
 
-exports.rule = "0 0 8 * * 1-5";
+exports.rule = "0 0 8 * * *";
 
 exports.task = () => {
     let promiseWeather = new Promise((resolve, reject) => { // 请求天气数据
@@ -44,7 +44,7 @@ exports.task = () => {
             // 转换为文本信息
             let weather = JSON.parse(querystring.unescape(result));
             let content = fs.readFileSync(WEATHER_MESSAGE_FILE).toString();
-            content = util.format(content, weather.tem1, weather.tem2, weather.wea);
+            content = util.format(content, weather.tem2, weather.tem1, weather.wea);
             resolve(content);
         }, reject);
     });
