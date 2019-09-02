@@ -21,6 +21,12 @@ const randomImgUrl = "https://api.pixivic.com/illust?" + querystring.stringify({
 // 新闻POST地址
 const newsUrl = "https://api.apiopen.top/getWangYiNews";
 
+// Currents API新闻
+const currentNewsUrl = "https://api.currentsapi.services/v1/latest-news?" + querystring.stringify({
+        language: "zh",
+        apiKey: "Gg62Kjbt3ySU_rJh4l5FQQ5bZ8VoNC9OPTr1ur1YGN7mQLwI"
+});
+
 /**
  * 创建一个机器人PUSH文本类型参数
  * @param  {[type]} content                    文本内容
@@ -132,4 +138,9 @@ exports.newNewsOption = () => ({
         page: 1,
         count: 10
     }
+});
+
+
+exports.newCurrentNewsOption = () => ({
+    url: currentNewsUrl
 });

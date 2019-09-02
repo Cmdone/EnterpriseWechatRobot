@@ -20,8 +20,13 @@ const INFO_WEATHER = "天气请求";
 const WEATHER_MESSAGE_FILE = path.resolve(__dirname, "../messages/markdown_weather.md"); // 天气消息文本
 const WEATHER_FAIL_MESSAGE = "**天气请求失败，请查看日志**\n";
 
-const INFO_NEWS = "新闻请求";
-const NEWS_FAIL_MESSAGE = "**新闻请求失败，请查看日志**\n";
+const INFO_NEWS = "网易新闻请求";
+const NEWS_FAIL_MESSAGE = "**网易新闻请求失败，请查看日志**\n";
+const NEWS_COUNT = 10;
+
+const INFO_CURRENT_NEWS = "Current新闻请求";
+const CURRENT_NEWS_FAIL_MESSAGE = "**Current新闻请求失败，请查看日志**\n";
+const CURRENT_NEWS_COUNT = 10;
 
 const INFO_IMAGE = "图片请求";
 const IMAGE_FAIL_MESSAGE = "**图片请求失败，请查看日志**\n";
@@ -60,8 +65,26 @@ exports.task = () => {
             // 转为文本信息
             let news = JSON.parse(result).result;
             let content = "";
-            for (let i = 0; i < news.length; i++) {
+            for (let i = 0; i < news.length && i < NEWS_COUNT; i++) {
                 content += `【${i+1}】[${news[i].title}](${news[i].path})  \n`;
+            }
+            resolve(content);
+        });
+    });
+
+    let promiseCurrentNews = new Promise((resolve, reject) => { // 请求新闻数据
+        let newsOption = optionUtil.newCurrentNewsOption();
+        requestWithRetry(newsOption, INFO_CURRENT_NEWS, (result) => {
+            if (!result) {
+                resolve(CURRENT_NEWS_FAIL_MESSAGE);
+                return;
+            }
+
+            // 转为文本信息
+            let news = JSON.parse(result).news;
+            let content = "";
+            for (let i = 0; i < CURRENT_NEWS_COUNT; i++) {
+                content += `【${NEWS_COUNT+i+1}】[${news[i].title}](${news[i].url})  \n`;
             }
             resolve(content);
         });
@@ -114,9 +137,9 @@ exports.task = () => {
         });
     });
 
-    Promise.all([promiseWeather, promiseNews, promiseImage])
+    Promise.all([promiseWeather, promiseNews, promiseCurrentNews, promiseImage])
         .then(value => {
-            let text = value[0] + value[1];
+            let text = value[0] + value[1] + value[2];
             let {
                 base64,
                 md5

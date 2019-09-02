@@ -27,6 +27,8 @@ windows系统有着多种睡眠状态：待机、休眠、睡眠……其区别�
 
 [免费天气api接口](https://www.kancloud.cn/ccjin/yingq)  
 [随机图片](https://www.v2ex.com/t/565252)  
+[新闻](https://www.apiopen.top/api.html)  
+[Current API](https://currentsapi.services/en)  
 
 # 其他工具
 
