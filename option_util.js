@@ -7,7 +7,9 @@ const robotUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=0831a120-
 // 天气GET地址
 const weatherUrl = "https://www.tianqiapi.com/api/?" + querystring.stringify({
     version: "v6", // v6实时天气
-    cityid: 101280604 // 定位于南山区
+    cityid: 101280604, // 定位于南山区
+    appid: 63391117,
+    appsecret: "mXhEVw3g"
 });
 
 // 随机图片GET地址
