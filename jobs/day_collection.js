@@ -143,11 +143,11 @@ exports.task = () => {
             let {
                 base64,
                 md5
-            } = value[2];
+            } = value[3];
 
 
             if (!base64 || !md5) {
-                text += value[2];
+                text += value[3];
             }
 
             let markdownOption = optionUtil.newRobotMarkdownOption(text);
