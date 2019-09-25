@@ -13,7 +13,7 @@ const weatherUrl = "https://www.tianqiapi.com/api/?" + querystring.stringify({
 });
 
 // 随机图片GET地址
-const randomImgUrl = "https://api.pixivic.com/illust?" + querystring.stringify({
+const randomImgUrl = "https://v1.api.pixivic.com/illust?" + querystring.stringify({
     isOriginal: true,
     isR18: true
 });
@@ -23,8 +23,8 @@ const newsUrl = "https://api.apiopen.top/getWangYiNews";
 
 // Currents API新闻
 const currentNewsUrl = "https://api.currentsapi.services/v1/latest-news?" + querystring.stringify({
-        language: "zh",
-        apiKey: "Gg62Kjbt3ySU_rJh4l5FQQ5bZ8VoNC9OPTr1ur1YGN7mQLwI"
+    language: "zh",
+    apiKey: "Gg62Kjbt3ySU_rJh4l5FQQ5bZ8VoNC9OPTr1ur1YGN7mQLwI"
 });
 
 /**
